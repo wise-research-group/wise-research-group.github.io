@@ -1,0 +1,28 @@
+#!/bin/bash
+# Downloads the group photos from the LSU faculty site into assets/photos/.
+# Run once from inside this folder:  bash get-photos.sh
+cd "$(dirname "$0")/assets/photos" || exit 1
+curl -fsSLO "https://faculty.lsu.edu/aly/images/aly.png" && echo "ok  aly.png" || echo "missing  aly.png"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/amro.jpg" && echo "ok  amro.jpg" || echo "missing  amro.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/binura.jpeg" && echo "ok  binura.jpeg" || echo "missing  binura.jpeg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/bresowar.jpg" && echo "ok  bresowar.jpg" || echo "missing  bresowar.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/bridge.png" && echo "ok  bridge.png" || echo "missing  bridge.png"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/building_solar_panels.png" && echo "ok  building_solar_panels.png" || echo "missing  building_solar_panels.png"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/chapain.jpg" && echo "ok  chapain.jpg" || echo "missing  chapain.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/cylinder.jpg" && echo "ok  cylinder.jpg" || echo "missing  cylinder.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/emily.jpg" && echo "ok  emily.jpg" || echo "missing  emily.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/faiaz.jpg" && echo "ok  faiaz.jpg" || echo "missing  faiaz.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/goodgion.png" && echo "ok  goodgion.png" || echo "missing  goodgion.png"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/hamzeh.png" && echo "ok  hamzeh.png" || echo "missing  hamzeh.png"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/husam.jpg" && echo "ok  husam.jpg" || echo "missing  husam.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/lsu_open_jet.png" && echo "ok  lsu_open_jet.png" || echo "missing  lsu_open_jet.png"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/matthew-thomas.jpg" && echo "ok  matthew-thomas.jpg" || echo "missing  matthew-thomas.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/mr-damper.jpg" && echo "ok  mr-damper.jpg" || echo "missing  mr-damper.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/nguyen.jpg" && echo "ok  nguyen.jpg" || echo "missing  nguyen.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/poche.jpg" && echo "ok  poche.jpg" || echo "missing  poche.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/rezaee.jpg" && echo "ok  rezaee.jpg" || echo "missing  rezaee.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/shake_table.jpg" && echo "ok  shake_table.jpg" || echo "missing  shake_table.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/smart-structure.jpg" && echo "ok  smart-structure.jpg" || echo "missing  smart-structure.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/tall_building.png" && echo "ok  tall_building.png" || echo "missing  tall_building.png"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/wtt.jpg" && echo "ok  wtt.jpg" || echo "missing  wtt.jpg"
+curl -fsSLO "https://faculty.lsu.edu/aly/images/xie.jpg" && echo "ok  xie.jpg" || echo "missing  xie.jpg"

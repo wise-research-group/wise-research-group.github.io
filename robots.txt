@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wise-research-group.github.io/sitemap.xml
