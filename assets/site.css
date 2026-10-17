@@ -326,3 +326,9 @@ blockquote footer{margin-top:.75rem;font-family:var(--display);font-size:.92rem;
 .glossary dd{margin:.3rem 0 0;color:var(--ink-soft)}
 .glossary .term:target{background:var(--accent-soft);box-shadow:0 0 0 .6rem var(--accent-soft)}
 html{scroll-padding-top:84px}
+.photo-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.4rem}
+.photo-row figure{margin:0}
+.photo-row img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:#E6EBF2;display:block}
+.photo-row figcaption{margin-top:.4rem;font-family:var(--display);font-size:.86rem;color:var(--ink-soft);line-height:1.35}
+.area figure.contain img{aspect-ratio:auto;object-fit:contain;background:#fff;padding:.4rem}
+.area .photo-row{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
