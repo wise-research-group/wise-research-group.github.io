@@ -332,3 +332,7 @@ html{scroll-padding-top:84px}
 .photo-row figcaption{margin-top:.4rem;font-family:var(--display);font-size:.86rem;color:var(--ink-soft);line-height:1.35}
 .area figure.contain img{aspect-ratio:auto;object-fit:contain;background:#fff;padding:.4rem}
 .area .photo-row{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+/* photo rows: keep each photo at a modest size even when a row has only two */
+.photo-row{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.area .photo-row{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.photo-row figure{max-width:340px}
