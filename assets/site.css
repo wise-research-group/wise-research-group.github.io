@@ -348,3 +348,4 @@ html{scroll-padding-top:84px}
 .do-card h3{font-size:1.2rem;margin:.8rem 0 .35rem;color:var(--teal)}
 .do-card p{font-size:.98rem}
 .employers span+span::before{margin:0 .65rem 0 .25rem}
+.do-card img.fit{object-fit:contain;background:#fff;padding:.3rem;border:1px solid var(--mist)}
