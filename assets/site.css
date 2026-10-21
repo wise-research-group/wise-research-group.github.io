@@ -336,3 +336,14 @@ html{scroll-padding-top:84px}
 .photo-row{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
 .area .photo-row{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 .photo-row figure{max-width:340px}
+/* ---- update 7: teaching evidence, quotes, join page ---- */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1.4rem}
+.quotes blockquote{margin:0;background:var(--paper);border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:1rem 1.2rem}
+.quotes blockquote p{font-size:1.02rem;font-style:italic}
+.quote-src{margin-top:.8rem;font-family:var(--display);font-size:.88rem;color:var(--ink-soft)}
+.photo-row.contain img{object-fit:contain;background:#fff;padding:.35rem;border:1px solid var(--mist)}
+.do-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem}
+.do-card{background:var(--paper);border:1px solid var(--mist);border-radius:14px;padding:.9rem .9rem 1.1rem}
+.do-card img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:#E6EBF2;display:block}
+.do-card h3{font-size:1.2rem;margin:.8rem 0 .35rem;color:var(--teal)}
+.do-card p{font-size:.98rem}
