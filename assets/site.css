@@ -367,3 +367,15 @@ html{scroll-padding-top:84px}
 @media (max-width:860px){.rotator{grid-row:auto;min-height:0;aspect-ratio:4/3}}
 @media (prefers-reduced-motion:reduce){.rot-slide{transition:none}}
 .rot-slide video{object-fit:contain;background:#0E1A33}
+/* ---- update 12: projects ---- */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.5rem}
+.proj{background:var(--paper);border:1px solid var(--mist);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.proj-media{background:#E6EBF2}
+.proj-media img,.proj-media video{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:#0E1A33}
+.proj-media img.fig{object-fit:contain;background:#fff;padding:.4rem}
+.proj-cap{font-family:var(--display);font-size:.82rem;color:var(--ink-soft);padding:.45rem .9rem 0;background:var(--paper);line-height:1.35}
+.proj-body{padding:.6rem 1rem 1.1rem}
+.proj-body h3{font-size:1.15rem;line-height:1.25;margin-top:.3rem}
+.proj-meta{font-family:var(--display);font-size:.85rem;color:var(--teal);font-weight:600;margin-top:.2rem}
+.proj-body p{margin-top:.45rem;font-size:.98rem}
+.proj-pubs{font-family:var(--display);font-size:.86rem;color:var(--ink-soft)}
