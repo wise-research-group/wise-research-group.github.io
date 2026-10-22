@@ -398,3 +398,5 @@ html{scroll-padding-top:84px}
 /* ---- update 14: keep the Team director block inside narrow screens ---- */
 .director>*{min-width:0}
 .facts{grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))}
+/* full frame for videos that contain plots (square frame, matching background) */
+.proj-media video.plot-video{aspect-ratio:960/916;object-fit:contain;background:#D0CBD1}
