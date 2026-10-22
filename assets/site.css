@@ -379,3 +379,19 @@ html{scroll-padding-top:84px}
 .proj-meta{font-family:var(--display);font-size:.85rem;color:var(--teal);font-weight:600;margin-top:.2rem}
 .proj-body p{margin-top:.45rem;font-size:.98rem}
 .proj-pubs{font-family:var(--display);font-size:.86rem;color:var(--ink-soft)}
+/* ---- update 13: applications graphic, testing-to-failure row ---- */
+.apps-svg{display:block;width:100%;max-width:1000px;height:auto;margin:.6rem auto 0}
+.apps-line{stroke:var(--teal-bright);stroke-width:3;stroke-dasharray:6 7;opacity:.8}
+.apps-hub{fill:none;stroke:var(--teal);stroke-width:8}
+.apps-node{fill:none;stroke:#fff;stroke-width:6}
+.apps-svg a:hover .apps-node,.apps-svg a:focus .apps-node{stroke:var(--amber)}
+.apps-label{font-family:var(--display);font-size:27px;font-weight:600;fill:var(--ink)}
+.apps-hub-label{font-family:var(--display);font-size:25px;font-weight:700;fill:var(--teal)}
+.apps-grid{display:none;list-style:none;padding:0;margin:1rem 0 0;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.apps-grid a{display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:600;font-size:.95rem}
+.apps-grid img{width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid var(--teal-bright);margin-bottom:.4rem}
+@media (max-width:640px){.apps-svg{display:none}.apps-grid{display:grid}}
+.fail-row video{object-fit:contain;background:#0E1A33}
+.apps-svg{max-width:1100px}
+.apps-pill{fill:var(--teal)}
+.apps-pill-text{font-family:var(--display);font-size:22px;font-weight:700;fill:#fff}
