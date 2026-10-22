@@ -111,3 +111,49 @@
   dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});
   dlg.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')show(idx-1);if(e.key==='ArrowRight')show(idx+1);});
 })();
+
+/* Looping videos: load and play only while on screen; never autoplay when the visitor prefers reduced motion. */
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var vids=document.querySelectorAll('video.auto-video');
+  if(!vids.length||reduce||!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    var v=e.target;
+    if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){});}else{v.pause();}
+  });},{threshold:0.35});
+  vids.forEach(function(v){io.observe(v);});
+})();
+
+/* Rotating "in action" panel: cross-fades slides, plays a slide's video only while it is showing,
+   pauses when off screen or when the visitor presses Pause, and stays still under reduced motion. */
+(function(){
+  var rot=document.querySelector('.rotator'); if(!rot) return;
+  var slides=[].slice.call(rot.querySelectorAll('.rot-slide')); if(!slides.length) return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx=0, timer=null, paused=reduce, visible=true;
+  var toggle=rot.querySelector('.rot-toggle');
+  function prime(i){var im=slides[i].querySelector('img[data-src]'); if(im){im.src=im.getAttribute('data-src'); im.removeAttribute('data-src');}}
+  function media(i){return slides[i].querySelector('video');}
+  function schedule(){clearTimeout(timer); if(paused||!visible) return;
+    timer=setTimeout(function(){show(idx+1);}, parseInt(slides[idx].getAttribute('data-dur')||'4500',10));}
+  function show(i){
+    var old=media(idx); if(old) old.pause();
+    slides[idx].classList.remove('is-active');
+    idx=(i+slides.length)%slides.length; prime(idx); prime((idx+1)%slides.length);
+    slides[idx].classList.add('is-active');
+    var v=media(idx); if(v&&!paused&&visible){var p=v.play(); if(p&&p.catch)p.catch(function(){});}
+    schedule();
+  }
+  function setPaused(p){paused=p; toggle.textContent=p?'Play':'Pause'; toggle.setAttribute('aria-label',p?'Play the slideshow':'Pause the slideshow');
+    var v=media(idx); if(v){ if(p) v.pause(); else {var q=v.play(); if(q&&q.catch)q.catch(function(){});} } schedule();}
+  rot.querySelector('.rot-next').onclick=function(){show(idx+1);};
+  rot.querySelector('.rot-prev').onclick=function(){show(idx-1);};
+  toggle.onclick=function(){setPaused(!paused);};
+  if(reduce){toggle.textContent='Play'; toggle.setAttribute('aria-label','Play the slideshow');}
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){visible=es[0].isIntersecting; var v=media(idx);
+      if(!visible){clearTimeout(timer); if(v) v.pause();} else { if(v&&!paused){var p=v.play(); if(p&&p.catch)p.catch(function(){});} schedule(); }
+    },{threshold:0.25}).observe(rot);
+  }
+  prime(1); schedule();
+})();
