@@ -1,4 +1,4 @@
-SITE UPDATE 27 (everything from updates 20-26 in one package)
+SITE UPDATE 27 (everything from updates 20-26, plus the sharpened figures, in one package)
 
 1. Top level of the repository: upload these files and commit:
    404.html
@@ -17,6 +17,7 @@ SITE UPDATE 27 (everything from updates 20-26 in one package)
 
 2. Inside assets/photos: upload these files and commit:
    mastarm-framework.jpg
+   overheight-protection.jpg
    ptmd-building-to-shake-table.jpg
    scour-countermeasures.jpg
    urban-heat-island.jpg
@@ -28,6 +29,7 @@ SITE UPDATE 27 (everything from updates 20-26 in one package)
    mr-damper.jpg
    naca0012-wake.jpg
    openjet-gable-pv-top.jpg
+   overheight-system.jpg
    phase1-fan-array.jpg
    phase1-measurement.jpg
    shake_table.jpg
@@ -36,5 +38,5 @@ SITE UPDATE 27 (everything from updates 20-26 in one package)
 
 4. Wait a minute, then open https://wise-research-group.github.io/projects.html and press refresh.
 
-Not included on purpose: Ryan Clancy's Discover Day talk. Upload the separate update-27-ryan-addon.zip
-only after Ryan says yes; it replaces join.html and team.html with versions that include his talk.
+Not included on purpose: Ryan Clancy's Discover Day talk. Upload update-27-ryan-addon.zip only after
+Ryan says yes; it replaces join.html and team.html with versions that include his talk.
