@@ -400,3 +400,14 @@ html{scroll-padding-top:84px}
 .facts{grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))}
 /* full frame for videos that contain plots (square frame, matching background) */
 .proj-media video.plot-video{aspect-ratio:960/916;object-fit:contain;background:#D0CBD1}
+/* ---- update 28: why it matters, partner calls to action ---- */
+.impact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1.2rem}
+.impact{background:var(--paper);border:1px solid var(--mist);border-left:5px solid var(--teal);border-radius:14px;padding:1.05rem 1.2rem 1.2rem}
+.impact .tag{font-family:var(--display);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:0}
+.impact h3{font-size:1.12rem;line-height:1.3;margin:.3rem 0 .45rem;color:var(--ink)}
+.impact p{font-size:.98rem}
+.partner{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;background:var(--accent-soft);border:1px solid var(--mist);border-radius:18px;padding:1.6rem 1.8rem}
+.partner h2{margin:0 0 .4rem}
+.partner a.btn{font-family:var(--display);font-weight:700;background:var(--teal);color:#fff;text-decoration:none;padding:.85rem 1.3rem;border-radius:999px;white-space:nowrap}
+.partner a.btn:hover,.partner a.btn:focus-visible{background:var(--ink)}
+@media (max-width:700px){.partner{grid-template-columns:1fr}}
