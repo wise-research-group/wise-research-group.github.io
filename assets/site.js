@@ -17,7 +17,7 @@
   var ctx=cv.getContext('2d');
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var W,H,dpr,xc,yg,bw,bh,ap,N,parts=[],smoke=[],vort=[],fixed=[],running=true,last=0,tShed=0;
-  var ob,om,G0,rc0,spd,SM=940;                     // oval half-spacing and strength; vortex scales; speed scale
+  var ob,om,G0,rc0,spd,SM=940,accE=0,accW=0;                     // oval half-spacing and strength; vortex scales; speed scale
   var NIGHT='#0E1A33';
   var stops=[[0,[28,110,122]],[0.45,[43,179,177]],[0.78,[191,217,166]],[1,[242,165,65]]],pal=[];
   for(var i=0;i<32;i++){var t=i/31,k=0;while(k<stops.length-2&&t>stops[k+1][0])k++;
@@ -54,6 +54,27 @@
     var prof=Math.pow(Math.max(Y,2)/(yg*0.95),0.2); u.u*=prof; u.v*=prof;
     for(var i=0;i<fixed.length;i++){var q=fixed[i]; addVortex(u,q.x,q.Y,q.G,q.rc);}
     for(var j=0;j<vort.length;j++){if(vort[j]===skip) continue; var w=vort[j]; addVortex(u,w.x,w.Y,w.G,w.rc);}
+    // the building surfaces are impermeable: near a wall or roof, flow heading into the surface is turned along it.
+    // Reverse flow in the cavity rises up the leeward wall and rejoins the outer flow; on the windward wall the flow
+    // splits at the stagnation point (about two-thirds of the height), feeding the horseshoe vortex below it.
+    var dw=0.22*bh,dr=0.14*bh,f,d;
+    if(Y<bh){
+      d=X-bw;
+      if(d>=0&&d<dw&&u.u<0){                       // leeward wall: low down the reverse flow turns upward,
+        f=1-d/dw; var un=-u.u,                     // higher up it turns back downstream, closing the cavity loop
+            t=Math.min(1,Math.max(0,(Y-0.40*bh)/(0.42*bh)));
+        u.v+=un*f*(1-t); u.u+=un*f*(1+0.6*t);
+      }
+      d=-bw-X; if(d>=0&&d<dw&&u.u>0){f=1-d/dw; u.v+=(Y>0.66*bh?1:-1)*u.u*f; u.u*=(1-f);}
+    }
+    if(Math.abs(X)<=bw){
+      var sl=(ap-bh)/bw, roofY=bh+(ap-bh)*(1-Math.abs(X)/bw), c=1/Math.sqrt(1+sl*sl);
+      d=(Y-roofY)*c;
+      if(d>=0&&d<dr){
+        var nx=(X<0?-sl:sl)*c, ny=c, un=u.u*nx+u.v*ny;          // outward normal of the windward or leeward slope
+        if(un<0){f=1-d/dr; u.u-=nx*un*f; u.v-=ny*un*f;}
+      }
+    }
     return [u.u,u.v,Math.sqrt(u.u*u.u+u.v*u.v)];
   }
   function stepVortices(dt){
@@ -73,17 +94,18 @@
   function spawn(anywhere){
     for(var tries=0;tries<30;tries++){
       var x=anywhere?Math.random()*W:-Math.random()*40, y=yg-yg*0.985*Math.pow(Math.random(),1.5);
-      if(vel(x,y)) return {x:x,y:y,life:150+Math.random()*450};
+      if(vel(x,y)) return {x:x,y:y,life:2.5+Math.random()*7.5};
     }
-    return {x:-10,y:yg*0.2,life:300};
+    return {x:-10,y:yg*0.2,life:5};
   }
   function moveSmoke(dt,draw){
-    for(var e=0;e<4&&smoke.length<SM;e++) smoke.push({x:xc-bw+Math.random()*3,y:yg-bh-1.5-Math.random()*4,life:560});
-    for(var e2=0;e2<2&&smoke.length<SM;e2++) if(Math.random()<0.7) smoke.push({x:xc+bw+2+Math.random()*3.4*bh,y:yg-2-Math.random()*1.15*bh,life:240});
+    accE+=240*dt; accW+=84*dt;                    // release rates per second, independent of the screen's refresh rate
+    while(accE>=1){accE--; if(smoke.length<SM) smoke.push({x:xc-bw+Math.random()*3,y:yg-bh-1.5-Math.random()*4,life:9.3});}
+    while(accW>=1){accW--; if(smoke.length<SM) smoke.push({x:xc+bw+2+Math.random()*3.4*bh,y:yg-2-Math.random()*1.15*bh,life:4});}
     if(draw) ctx.beginPath();
     for(var s2=smoke.length-1;s2>=0;s2--){
       var q2=smoke[s2],U2=vel(q2.x,q2.y);
-      if(!U2||q2.x>W+5||q2.life--<0){smoke.splice(s2,1);continue;}
+      q2.life-=dt; if(!U2||q2.x>W+5||q2.life<0){smoke.splice(s2,1);continue;}
       var hx=q2.x+U2[0]*spd*dt*0.5,hy=q2.y-U2[1]*spd*dt*0.5,U3=vel(hx,hy)||U2;
       var tx=q2.x+U3[0]*spd*dt,ty=Math.min(q2.y-U3[1]*spd*dt,yg-0.5);
       if(draw){ctx.moveTo(q2.x,q2.y);ctx.lineTo(tx,ty);}
@@ -114,7 +136,8 @@
            {x:xc+bw+0.85*bh,Y:0.50*bh,G:1.1*G0,rc:0.50*bh}];          // mean recirculating eddy in the cavity
     vort=[];tShed=0; for(var s=0;s<16;s++) stepVortices(0.25);     // start with a developed wake
     N=Math.round(Math.min(1300,W*H/(narrow?1500:1000)));
-    parts=[];for(var i=0;i<N;i++)parts.push(spawn(true)); smoke=[];
+    parts=[];for(var i=0;i<N;i++)parts.push(spawn(true)); smoke=[]; accE=accW=0;
+    if(!reduce){for(var w0=0;w0<150;w0++){stepVortices(1/30); moveSmoke(1/30,false);}}
     ctx.fillStyle=NIGHT;ctx.fillRect(0,0,W,H);
     if(reduce) drawStatic();
   }
@@ -137,11 +160,11 @@
     if(!running){requestAnimationFrame(frame);return;}
     var dt=last?Math.min((ts-last)/1000,0.05):0.016;last=ts;
     stepVortices(dt);
-    ctx.fillStyle='rgba(14,26,51,0.085)';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(14,26,51,'+(1-Math.pow(1-0.085,dt*60)).toFixed(4)+')';ctx.fillRect(0,0,W,H);
     var buckets={};
     for(var i=0;i<parts.length;i++){
       var p=parts[i],V=vel(p.x,p.y);
-      if(!V||p.x>W+5||p.x<-60||p.y<-5||p.life--<0){parts[i]=spawn(false);continue;}
+      p.life-=dt; if(!V||p.x>W+5||p.x<-60||p.y<-5||p.life<0){parts[i]=spawn(false);continue;}
       var mx=p.x+V[0]*spd*dt*0.5,my=p.y-V[1]*spd*dt*0.5,V2=vel(mx,my)||V;
       var nx=p.x+V2[0]*spd*dt,ny=p.y-V2[1]*spd*dt;
       if(ny>yg-0.5) ny=yg-0.5;
