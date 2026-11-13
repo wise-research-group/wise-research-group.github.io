@@ -411,3 +411,6 @@ html{scroll-padding-top:84px}
 .partner a.btn{font-family:var(--display);font-weight:700;background:var(--teal);color:#fff;text-decoration:none;padding:.85rem 1.3rem;border-radius:999px;white-space:nowrap}
 .partner a.btn:hover,.partner a.btn:focus-visible{background:var(--ink)}
 @media (max-width:700px){.partner{grid-template-columns:1fr}}
+
+/* ---- update 35: hero caption width ---- */
+.hero-cap{max-width:60ch}
