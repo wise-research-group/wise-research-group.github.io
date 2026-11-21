@@ -260,7 +260,11 @@ blockquote footer{margin-top:.75rem;font-family:var(--display);font-size:.92rem;
 .site-nav a:hover{color:var(--ink);border-color:var(--amber)}
 .site-nav a[aria-current="page"]{color:var(--ink);border-color:var(--teal)}
 .nav-toggle{display:none;margin-left:auto;font-family:var(--display);font-weight:600;font-size:.95rem;background:transparent;border:2px solid var(--mist);border-radius:999px;padding:.4rem .9rem;color:var(--ink);cursor:pointer}
-@media (max-width:860px){
+@media (min-width:1000px) and (max-width:1099px){
+  .site-nav{gap:.2rem .8rem}
+  .site-nav a{font-size:.93rem}
+}
+@media (max-width:999px){
   .js .nav-toggle{display:inline-block}
   .js .site-nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);border-bottom:1px solid var(--mist);flex-direction:column;padding:.6rem 1.25rem 1rem;gap:0}
   .js .site-nav.open{display:flex}
@@ -418,3 +422,9 @@ html{scroll-padding-top:84px}
 .glossary dt,.glossary dd,.pubs li,.news p,.proj-body p{overflow-wrap:anywhere}
 .proj-media img,.proj-media video{height:auto}
 .fac-note{margin-top:1.4rem;max-width:var(--measure);color:var(--ink-soft)}
+/* ---- update 43: statement block ---- */
+.keynote{margin-top:1.6rem;padding:1.3rem 1.6rem;background:var(--accent-soft);border-left:6px solid var(--teal);border-radius:0 14px 14px 0}
+.keynote h2,.keynote h3{margin:0 0 .4rem;font-size:1.2rem}
+.keynote{max-width:52rem}
+.keynote p{margin:0;max-width:none}
+#data .keynote{margin-top:0}
