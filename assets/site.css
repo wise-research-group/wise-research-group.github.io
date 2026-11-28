@@ -449,7 +449,7 @@ html{scroll-padding-top:84px}
 .reach-list li::before{content:counter(r);position:absolute;left:0;top:.02rem;width:1.5rem;height:1.5rem;box-sizing:border-box;border-radius:50%;border:1.6px solid var(--teal-bright);display:grid;place-items:center;font-size:.78rem;font-weight:700;color:#fff}
 .reach-list li:first-child::before{background:var(--amber);border-color:var(--amber);color:var(--night)}
 .reach-list b{color:#fff}
-@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem 1.4rem}.reach-list{grid-template-columns:1fr}.record-panel{border-radius:18px 18px 18px 40px}.reach-map img{width:150%;max-width:none;margin-left:-27%}}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem 1.4rem}.reach-list{grid-template-columns:1fr}.record-panel{border-radius:18px 18px 18px 40px}.reach-map img{width:146%;max-width:none;margin-left:-21%}}
 
 /* ---------- facility spec table ---------- */
 .specs{margin-top:2.2rem;background:var(--paper);border:1px solid var(--mist);border-radius:18px 18px 18px 48px;padding:clamp(1.2rem,3vw,2rem)}
