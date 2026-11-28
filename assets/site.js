@@ -262,3 +262,72 @@
   }
   prime(1); schedule();
 })();
+
+/* Publications: search box, topic filters, and an open-access filter. Hides empty years and sections. */
+(function(){
+  var box=document.getElementById('pub-tools'); if(!box) return;
+  var items=Array.prototype.slice.call(document.querySelectorAll('ul.pubs > li'));
+  if(!items.length) return;
+  var text=items.map(function(li){return li.textContent.toLowerCase();});
+  var topics=[
+    ['Open-jet testing',/open[- ]jet|wall of wind/i],
+    ['Low-rise buildings and roofs',/low[- ]rise|\broofs?\b|parapet|gable|cladding/i],
+    ['Tall buildings',/high[- ]rise|tall building|skyscraper/i],
+    ['Solar and agrivoltaics',/solar|photovoltaic|\bPV\b|agrivoltaic/i],
+    ['Wind turbines',/wind turbine|offshore wind|floating/i],
+    ['Vibration control',/damper|vibration control|structural control|semi-active|vibration attenuation|tuned mass|pounding/i],
+    ['CFD and LES',/\bCFD\b|computational fluid|large[- ]eddy|\bLES\b|\bRANS\b/i],
+    ['Machine learning',/machine[- ]learning|neural network|deep learning|artificial intelligence/i],
+    ['Bridges',/bridge/i],
+    ['Trees and vegetation',/\btrees?\b|vegetat/i],
+    ['Free to read',null]
+  ];
+  var active=-1;
+  box.innerHTML='<div class="pub-search"><label for="pubq">Search publications</label>'+
+    '<div class="pub-row"><input id="pubq" type="search" autocomplete="off" placeholder="Title, author, journal, or year">'+
+    '<button type="button" class="pub-clear">Clear</button></div></div>'+
+    '<div class="pub-chips" role="group" aria-label="Filter by topic"></div>'+
+    '<p class="pub-status" aria-live="polite"></p>';
+  var input=box.querySelector('#pubq'), chipsEl=box.querySelector('.pub-chips'), status=box.querySelector('.pub-status');
+  function hit(i,t){var tp=topics[t]; return tp[1]?tp[1].test(items[i].textContent):!!items[i].querySelector('.oa');}
+  topics.forEach(function(tp,t){
+    var n=0; for(var i=0;i<items.length;i++) if(hit(i,t)) n++;
+    var b=document.createElement('button'); b.type='button'; b.className='chip'+(tp[1]?'':' chip-oa');
+    b.setAttribute('aria-pressed','false'); b.innerHTML=tp[0]+' <span>'+n+'</span>';
+    b.addEventListener('click',function(){active=(active===t)?-1:t; sync(); apply();});
+    chipsEl.appendChild(b);
+  });
+  function sync(){Array.prototype.forEach.call(chipsEl.children,function(b,t){b.setAttribute('aria-pressed',t===active?'true':'false');});}
+  function apply(){
+    var terms=input.value.toLowerCase().trim().split(/\s+/).filter(Boolean), shown=0;
+    items.forEach(function(li,i){
+      var ok=terms.every(function(w){return text[i].indexOf(w)>-1;}) && (active<0||hit(i,active));
+      li.hidden=!ok; if(ok) shown++;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('h3.yearhead'),function(h){
+      var ul=h.nextElementSibling; if(ul&&ul.matches('ul.pubs')) h.hidden=!ul.querySelector('li:not([hidden])');
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('ul.pubs'),function(ul){ul.hidden=!ul.querySelector('li:not([hidden])');});
+    Array.prototype.forEach.call(document.querySelectorAll('main section.section[id]'),function(sec){
+      if(sec.querySelector('ul.pubs')) sec.hidden=!sec.querySelector('ul.pubs li:not([hidden])');
+    });
+    var filtered=terms.length||active>=0;
+    status.textContent=filtered?('Showing '+shown+' of '+items.length+' entries.'+(shown?'':' Try a shorter search.')):(items.length+' entries. Type to search, or pick a topic.');
+  }
+  var t0; input.addEventListener('input',function(){clearTimeout(t0); t0=setTimeout(apply,120);});
+  box.querySelector('.pub-clear').addEventListener('click',function(){input.value=''; active=-1; sync(); apply(); input.focus();});
+  try{var q=new URLSearchParams(location.search).get('q'); if(q) input.value=q;}catch(e){}
+  box.hidden=false; apply();
+})();
+
+/* Facility film: a large play button over the poster; the native controls take over once it plays. */
+(function(){
+  var fig=document.querySelector('figure.film'); if(!fig) return;
+  var v=fig.querySelector('video'), frame=fig.querySelector('.film-frame'); if(!v||!frame) return;
+  var b=document.createElement('button'); b.type='button'; b.className='film-play';
+  b.innerHTML='<span class="film-play-icon" aria-hidden="true"></span>Play the film';
+  frame.appendChild(b);
+  b.addEventListener('click',function(){var p=v.play(); if(p&&p.catch)p.catch(function(){}); v.focus();});
+  v.addEventListener('play',function(){fig.classList.add('is-playing');});
+  v.addEventListener('ended',function(){fig.classList.remove('is-playing');});
+})();
